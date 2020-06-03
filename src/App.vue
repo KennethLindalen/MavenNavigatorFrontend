@@ -1,11 +1,11 @@
 <template>
     <div class="container mt-3" id="app">
-        <div class="jumbotron alert-info mt-0">
+        <div class="jumbotron mt-0">
             <h1>Maven Navigator</h1>
         </div>
         <div class="row">
             <div class="col-sm mt-1">
-                <div class="alert alert-info mb-3 mt-0">
+                <div class="alert alert-secondary mb-3 mt-0">
                     <h3>Upload the dependency tree here</h3>
                     <hr>
                     <p class="m-0">Open up your preferred commandline tool and type</p>
@@ -19,15 +19,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="alert alert-info">
+                <div class="alert alert-secondary">
                     <h3>Paste your dependecy tree here</h3>
                     <hr>
                     <textarea/>
                 </div>
             </div>
             <div class="col-sm ">
-                <JsonTree id="treeview" class="alert alert-info" :data="dataObj"></JsonTree>
-                <div class="alert alert-info mt-3">
+                <JsonTree id="treeview" class="alert alert-secondary" :data="dataObj"></JsonTree>
+                <div class="alert alert-secondary mt-3">
                     <h4>Version conflicts and compilation orders to fix them</h4>
                     <hr>
                 </div>
@@ -93,7 +93,7 @@
 
     #treeview {
         height: 75vh;
-        overflow-y: auto;
+        overflow: auto;
 
     }
 
