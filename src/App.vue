@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-sm mt-1">
                 <div class="alert alert-secondary mb-3 mt-0" style="text-align: center">
-                    <h3>Upload the dependency tree here</h3>
+                    <h3>Upload your dependency tree here</h3>
                     <hr>
                     <div class="m-0">
                         <p class="m-0">Open up your preferred commandline tool and type</p>
@@ -19,12 +19,13 @@
                         <p class="m-0">Example:</p>
                         <pre class="m-0">mvn dependency:tree -DoutputFile=temp/mvn_dependency_tree.txt</pre>
                         <p>this is the file to upload here. Required to be a .txt file.</p></div>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-2">
                         <div class="custom-file">
                             <file-reader @load="file = $event"></file-reader>
-
                         </div>
                     </div>
+                    <button type="button" class="btn btn-secondary" style="width: 100%" @click="sendData">Find conflicts</button>
+
                 </div>
                 <div class="alert alert-secondary mt-3">
                     <h4>Version conflicts and compilation orders to fix them</h4>
@@ -50,6 +51,7 @@
 <script>
     import JsonTree from 'vue-json-tree'
     import FileReader from "@/components/FileReader";
+    import Axios from 'axios'
 
     export default {
         name: 'App',
@@ -60,7 +62,8 @@
         data() {
             return {
                 file: "",
-                dataObj: {
+                test: [],
+                dataObj:{
                     "Name": "Zero",
                     "Level": 0,
                     "Sub": [{
@@ -87,6 +90,13 @@
                 for (let i = 0; i < file_data.length; i++){
                     file_data[i] = file_data[i].replace("\\", "\\\\")
                 }
+                Axios.post("http://192.168.10.131:8080/",{
+                    input: file_data
+                })
+                .then(response =>
+
+                    this.dataObj = response.data.jsonTree
+                )
             }
         },
     }
