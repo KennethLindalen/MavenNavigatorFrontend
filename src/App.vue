@@ -15,21 +15,74 @@
                     <hr>
                     <div class="m-0">
                         <p class="m-0">Open up your preferred commandline tool and type</p>
-                        <pre class="m-0">mvn dependency:tree -Doutput=/path/to/file.txt</pre>
+                        <pre class="m-0 alert alert-light mt-2 mb-2">mvn dependency:tree -Doutput=/path/to/file.txt</pre>
                         <p class="m-0">Example:</p>
-                        <pre class="m-0">mvn dependency:tree -DoutputFile=temp/mvn_dependency_tree.txt</pre>
-                        <p>this is the file to upload here. Required to be a .txt file.</p></div>
+                        <pre class="m-0 alert alert-light mt-2 mb-2">mvn dependency:tree -DoutputFile=temp/mvn_dependency_tree.txt</pre>
+                        <p>this will create a temp folder in your project directory with the file you need to upload
+                            here.
+                            <br>
+                            <span style="font-weight: bold">Required to be a .txt file!</span></p></div>
                     <div class="input-group mb-2">
                         <div class="custom-file">
                             <file-reader @load="file = $event"></file-reader>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-secondary" style="width: 100%" @click="sendData">Find conflicts</button>
+                    <div class="alert alert-danger" v-if="errorMsg !== ''">
+                        <p>{{errorMsg}}</p>
+                    </div>
+                    <button type="button" class="btn btn-secondary" style="width: 100%" @click="sendData">Find
+                        conflicts
+                    </button>
 
                 </div>
-                <div class="alert alert-secondary mt-3">
+                <div class="alert alert-primary mt-3">
                     <h4>Version conflicts and compilation orders to fix them</h4>
+                    <p v-if="conflictCount >= 1">We found {{conflictCount}} conflict set<span
+                            v-if="conflictCount > 1">s</span> in your build.</p>
                     <hr>
+                    <div class="alert alert-info" v-for="(conflict, index) in conflictObj" :key="index">
+                        <div class="row">
+                            <div class="col">
+                                <h5>This maven dependency has {{conflict.conflicts.length}} conflict<span
+                                        v-if="conflict.conflicts.length > 1">s</span></h5>
+                                <hr>
+                                <p>Package information: </p>
+                                <hr>
+                                <div>
+                                    <p>Group ID: {{conflict.firstOccurance.GroupId}}</p>
+                                    <p>Artifact ID: {{conflict.firstOccurance.ArtifactId}}</p>
+                                </div>
+                            </div>
+                            <div class="col" v-for="(obj, index) in conflict.conflicts" :key="index">
+                                <div class="alert alert-light row">
+                                    <div class="col m-0">
+                                        <p class="m-1 bolder">Group ID: <br> <span style="font-weight: normal">{{conflict.firstOccurance.GroupId}}</span></p>
+                                        <p class="m-1 bolder">Artifact ID: <br><span style="font-weight: normal">{{conflict.firstOccurance.ArtifactId}}</span></p>
+                                        <p class="bolder">Version: <br><span style="font-weight: normal">{{conflict.firstOccurance.Version}}</span></p>
+                                    </div>
+                                    <div class="col  m-0 p-0">
+                                        <button class="btn btn-outline-info" style="width: 85%; float: right"
+                                                @click="notImpl">
+                                            See the project structure containing this dependency
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="alert alert-light row">
+                                    <div class="col m-0">
+                                        <p class="m-1 bolder">Group ID: <br><span style="font-weight: normal">{{obj.GroupId}}</span></p>
+                                        <p class="m-1 bolder">Artifact ID: <br><span style="font-weight: normal">{{obj.ArtifactId}}</span></p>
+                                        <p class="bolder">Version: <br> <span style="font-weight: normal">{{obj.Version}}</span></p>
+                                    </div>
+                                    <div class="col m-0 p-0">
+                                        <button class="btn btn-outline-info" style="width: 85%; float: right"
+                                                @click="notImpl">
+                                            See the project structure containing this dependency
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-sm">
@@ -38,6 +91,7 @@
         </div>
         <div class="footer pt-5 pb-4" style="text-align: center">
             Developed by Kenneth Lindalen <br>
+            <p>Contact me</p>
             <a href="https://www.linkedin.com/in/kenneth-lindalen-1ba35a187/"><img
                     src="./assets/icons/linkedin-brands.svg.png" alt=""></a>
             <a href="https://github.com/KennethLindalen"><img src="./assets/icons/github-brands.svg.png" alt=""></a>
@@ -63,7 +117,7 @@
             return {
                 file: "",
                 test: [],
-                dataObj:{
+                dataObj: {
                     "Name": "Zero",
                     "Level": 0,
                     "Sub": [{
@@ -79,24 +133,36 @@
                         "Level": 2,
                         "Sub": [{"Name": "Three", "Level": 3, "Sub": []}, {"Name": "Three", "Level": 3, "Sub": []}]
                     }, {"Name": "One", "Level": 1, "Sub": [{"Name": "Two", "Level": 2, "Sub": []}]}]
-                }
-
+                },
+                conflictObj: [],
+                conflictCount: 0,
+                errorMsg: ""
             }
         },
         methods: {
-            sendData:function () {
+            sendData: function () {
                 let file_data = []
+                let response_tree;
+                let response_conflicts;
                 file_data = this.file.split("\n");
-                for (let i = 0; i < file_data.length; i++){
+                for (let i = 0; i < file_data.length; i++) {
                     file_data[i] = file_data[i].replace("\\", "\\\\")
                 }
-                Axios.post("http://192.168.10.131:8080/",{
+                Axios.post("http://192.168.10.131:8080/", {
                     input: file_data
                 })
-                .then(response =>
+                    .then(response => {
+                            response_tree = response.data.jsonTree;
+                            response_conflicts = response.data.conflictMasterPOJOS;
+                            this.dataObj = response_tree;
+                            this.conflictObj = response_conflicts;
+                            this.conflictCount = response_conflicts.length;
+                        }
+                    )
 
-                    this.dataObj = response.data.jsonTree
-                )
+            },
+            notImpl: function () {
+                alert("Not yet implemented. Will be ready in the next update.")
             }
         },
     }
@@ -121,6 +187,13 @@
         min-width: 0;
         height: 75vh;
         overflow: auto;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+    .bolder {
+        font-weight: bold;
     }
 
 </style>
