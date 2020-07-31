@@ -97,10 +97,10 @@
       Developed by Kenneth Lindalen <br>
       <p>Contact me</p>
       <a href="https://www.linkedin.com/in/kenneth-lindalen-1ba35a187/"><img
-          src="./assets/icons/linkedin-brands.svg.png" alt=""></a>
-      <a href="https://github.com/KennethLindalen"><img src="./assets/icons/github-brands.svg.png" alt=""></a>
+          src="./assets/icons/linkedin-brands.svg" alt="" class="social-icons"></a>
+      <a href="https://github.com/KennethLindalen"><img src="./assets/icons/github-brands.svg" alt="" class="social-icons"></a>
       <a class="ml-1" href="https://www.buymeacoffee.com/kennethlindalen"><img
-          src="./assets/icons/buymeacoffe.svg.png" alt=""></a>
+          src="./assets/icons/buymeacoffe.svg" alt=""></a>
 
     </div>
   </div>
@@ -192,6 +192,10 @@ ul {
 
 .bolder {
   font-weight: bold;
+}
+
+.social-icons {
+  width: 20px;
 }
 
 </style>
