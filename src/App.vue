@@ -1,199 +1,198 @@
-<template>
-    <div class="container-fluid mt-3" id="app" style="padding-left: 5%;padding-right: 5%">
-        <div class="jumbotron mt-0">
-            <div class="container-fluid">
-                <h1 class="display-4">Visualized Maven Conflicts</h1>
-                <p class="lead">The simple way to get a good overview of your dependency tree and find version conflicts
-                    in your maven builds.</p>
+<template xmlns:JsonTree="http://www.w3.org/1999/html">
+  <div class="container-fluid mt-3" id="app" style="padding-left: 5%;padding-right: 5%">
+    <div class="jumbotron mt-0">
+      <div class="container-fluid">
+        <h1 class="display-4">Visualized Maven Conflicts</h1>
+        <p class="lead">The simple way to get a good overview of your dependency tree and find version conflicts
+          in your maven builds.</p>
 
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm mt-1">
-                <div class="alert alert-secondary mb-3 mt-0" style="text-align: center">
-                    <h3>Upload your dependency tree here</h3>
-                    <hr>
-                    <div class="m-0">
-                        <p class="m-0">Open up your preferred commandline tool and type</p>
-                        <pre class="m-0 alert alert-light mt-2 mb-2">mvn dependency:tree -Doutput=/path/to/file.txt</pre>
-                        <p class="m-0">Example:</p>
-                        <pre class="m-0 alert alert-light mt-2 mb-2">mvn dependency:tree -DoutputFile=temp/mvn_dependency_tree.txt</pre>
-                        <p>this will create a temp folder in your project directory with the file you need to upload
-                            here.
-                            <br>
-                            <span style="font-weight: bold">Required to be a .txt file!</span></p></div>
-                    <div class="input-group mb-2">
-                        <div class="custom-file">
-                            <file-reader @load="file = $event"></file-reader>
-                        </div>
-                    </div>
-                    <div class="alert alert-danger" v-if="errorMsg !== ''">
-                        <p>{{errorMsg}}</p>
-                    </div>
-                    <button type="button" class="btn btn-secondary" style="width: 100%" @click="sendData">Find
-                        conflicts
-                    </button>
-
-                </div>
-                <div class="alert alert-primary mt-3">
-                    <h4>Version conflicts and compilation orders to fix them</h4>
-                    <p v-if="conflictCount >= 1">We found {{conflictCount}} conflict set<span
-                            v-if="conflictCount > 1">s</span> in your build.</p>
-                    <hr>
-                    <div class="alert alert-info" v-for="(conflict, index) in conflictObj" :key="index">
-                        <div class="row">
-                            <div class="col">
-                                <h5>This maven dependency has {{conflict.conflicts.length}} conflict<span
-                                        v-if="conflict.conflicts.length > 1">s</span></h5>
-                                <hr>
-                                <p>Package information: </p>
-                                <hr>
-                                <div>
-                                    <p>Group ID: {{conflict.firstOccurance.GroupId}}</p>
-                                    <p>Artifact ID: {{conflict.firstOccurance.ArtifactId}}</p>
-                                </div>
-                            </div>
-                            <div class="col" v-for="(obj, index) in conflict.conflicts" :key="index">
-                                <div class="alert alert-light row">
-                                    <div class="col m-0">
-                                        <p class="m-1 bolder">Group ID: <br> <span style="font-weight: normal">{{conflict.firstOccurance.GroupId}}</span></p>
-                                        <p class="m-1 bolder">Artifact ID: <br><span style="font-weight: normal">{{conflict.firstOccurance.ArtifactId}}</span></p>
-                                        <p class="bolder">Version: <br><span style="font-weight: normal">{{conflict.firstOccurance.Version}}</span></p>
-                                    </div>
-                                    <div class="col  m-0 p-0">
-                                        <button class="btn btn-outline-info" style="width: 85%; float: right"
-                                                @click="notImpl">
-                                            See the project structure containing this dependency
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="alert alert-light row">
-                                    <div class="col m-0">
-                                        <p class="m-1 bolder">Group ID: <br><span style="font-weight: normal">{{obj.GroupId}}</span></p>
-                                        <p class="m-1 bolder">Artifact ID: <br><span style="font-weight: normal">{{obj.ArtifactId}}</span></p>
-                                        <p class="bolder">Version: <br> <span style="font-weight: normal">{{obj.Version}}</span></p>
-                                    </div>
-                                    <div class="col m-0 p-0">
-                                        <button class="btn btn-outline-info" style="width: 85%; float: right"
-                                                @click="notImpl">
-                                            See the project structure containing this dependency
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <JsonTree class="json-tree-root" :data="dataObj"></JsonTree>
-            </div>
-        </div>
-        <div class="footer pt-5 pb-4" style="text-align: center">
-            Developed by Kenneth Lindalen <br>
-            <p>Contact me</p>
-            <a href="https://www.linkedin.com/in/kenneth-lindalen-1ba35a187/"><img
-                    src="./assets/icons/linkedin-brands.svg.png" alt=""></a>
-            <a href="https://github.com/KennethLindalen"><img src="./assets/icons/github-brands.svg.png" alt=""></a>
-            <a class="ml-1" href="https://www.buymeacoffee.com/kennethlindalen"><img
-                    src="./assets/icons/buymeacoffe.svg.png" alt=""></a>
-
-        </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-sm mt-1">
+        <div class="alert alert-secondary mb-3 mt-0" style="text-align: center">
+          <h3>Upload your dependency tree here</h3>
+          <hr>
+          <div class="m-0">
+            <p class="m-0">Open up your preferred commandline tool, navigate to your project and type</p>
+            <pre class="m-0 alert alert-light mt-2 mb-2">mvn dependency:tree -Doutput=/path/to/file.txt</pre>
+            <p class="m-0">Example:</p>
+            <pre
+                class="m-0 alert alert-light mt-2 mb-2">mvn dependency:tree -DoutputFile=temp/mvn_dependency_tree.txt</pre>
+            <p>this will create a temp folder in your project directory with the file you need to upload
+              here.
+              <br>
+              <span
+                  style="font-weight: bold">Required to be the file generated by the previously mentioned command!</span>
+            </p></div>
+          <div class="alert alert-danger" style="padding-bottom: 0">
+            <p>Copying the tree from your terminal into a text document should not be done, I have not gotten around to
+              write the document parser for that on the backend <span
+                  style="text-decoration: underline solid; font-weight: bold">yet</span>. <br>
+              If you find any bugs in the app, please let me know on <a
+                  href="https://github.com/KennethLindalen/MvnDepParser">github</a>!</p>
+          </div>
+          <div class="input-group mb-2">
+            <div class="custom-file">
+              <file-reader @load="file = $event"></file-reader>
+            </div>
+          </div>
+          <div class="alert alert-danger" v-if="errorMsg !== ''">
+            <p>{{ errorMsg }}</p>
+          </div>
+          <button type="button" class="btn btn-secondary" style="width: 100%" @click="sendData">Find
+            conflicts
+          </button>
+
+        </div>
+        <div class="alert alert-secondary mt-3" v-if="conflictCount > 0">
+          <h4>Found {{ conflictCount }} confliction set<span v-if="conflictCount > 1">s</span> in your build.</h4>
+          <hr>
+          <div class="alert alert-light" v-for="(conflict, firstindex) in conflictObj" :key="firstindex">
+            <div class="row" style="color: black">
+              <div class="col">
+                <h5>This maven dependency has {{ conflict.conflicts.length }} conflict<span
+                    v-if="conflict.conflicts.length > 1">s</span></h5>
+                <hr>
+                <div>
+                  <p><span class="bolder">Group ID:</span> {{ conflict.firstOccurance.GroupId }}</p>
+                  <p><span class="bolder">Artifact ID:</span> {{ conflict.firstOccurance.ArtifactId }}</p>
+                </div>
+              </div>
+              <div class="col" v-for="(obj, secondindex) in conflict.conflicts" :key="secondindex"
+                   style="margin: 0; overflow-y: auto">
+                <div class="alert alert-light"
+                     style="border: black solid 1px;color: black; width: 60%; float: right">
+                  <p class="bolder">Version: <br><span
+                      style="font-weight: normal">{{ conflict.firstOccurance.Version }}</span>
+                  </p>
+
+                  <button class="btn btn-outline-dark" style="width: 100%; padding: 10px; margin: 0"
+                          @click="conflictTreeView(conflictObj[firstindex].firstOccuranceJsonMap)">
+                    See the project structure containing this dependency
+                  </button>
+                </div>
+                <div class="alert alert-light"
+                     style="border: black solid 1px;color: black; width: 60%; float: right">
+                  <p class="bolder">Version: <br> <span
+                      style="font-weight: normal">{{ obj.Version }}</span></p>
+                  <button class="btn btn-outline-dark" style="width: 100%; padding: 10px; margin: 0"
+                          @click="conflictTreeView(conflict.jsonMap)">
+                    See the project structure containing this dependency
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm">
+        <JsonTree class="json-tree-root" :data="dataObj"></JsonTree>
+        <button class="btn btn-outline-dark" style="width: 100%; margin-top: 15px"
+                @click="fullTreeView" v-if="treeview">
+          Show the full tree instead
+        </button>
+      </div>
+    </div>
+    <div class="footer pt-5 pb-4" style="text-align: center">
+      Developed by Kenneth Lindalen <br>
+      <p>Contact me</p>
+      <a href="https://www.linkedin.com/in/kenneth-lindalen-1ba35a187/"><img
+          src="./assets/icons/linkedin-brands.svg.png" alt=""></a>
+      <a href="https://github.com/KennethLindalen"><img src="./assets/icons/github-brands.svg.png" alt=""></a>
+      <a class="ml-1" href="https://www.buymeacoffee.com/kennethlindalen"><img
+          src="./assets/icons/buymeacoffe.svg.png" alt=""></a>
+
+    </div>
+  </div>
 </template>
 
 <script>
-    import JsonTree from 'vue-json-tree'
-    import FileReader from "@/components/FileReader";
-    import Axios from 'axios'
+import JsonTree from 'vue-json-tree'
+import FileReader from "@/components/FileReader";
+import Axios from 'axios'
 
-    export default {
-        name: 'App',
-        components: {
-            JsonTree,
-            FileReader
-        },
-        data() {
-            return {
-                file: "",
-                test: [],
-                dataObj: {
-                    "Name": "Zero",
-                    "Level": 0,
-                    "Sub": [{
-                        "Name": "One",
-                        "Level": 1,
-                        "Sub": [{"Name": "Two", "Level": 2, "Sub": [{"Name": "Three", "Level": 3, "Sub": []}]}]
-                    }, {
-                        "Name": "One",
-                        "Level": 1,
-                        "Sub": [{"Name": "Two", "Level": 2, "Sub": [{"Name": "Three", "Level": 3, "Sub": []}]}]
-                    }, {
-                        "Name": "Two",
-                        "Level": 2,
-                        "Sub": [{"Name": "Three", "Level": 3, "Sub": []}, {"Name": "Three", "Level": 3, "Sub": []}]
-                    }, {"Name": "One", "Level": 1, "Sub": [{"Name": "Two", "Level": 2, "Sub": []}]}]
-                },
-                conflictObj: [],
-                conflictCount: 0,
-                errorMsg: ""
-            }
-        },
-        methods: {
-            sendData: function () {
-                let file_data = []
-                let response_tree;
-                let response_conflicts;
-                file_data = this.file.split("\n");
-                for (let i = 0; i < file_data.length; i++) {
-                    file_data[i] = file_data[i].replace("\\", "\\\\")
-                }
-                Axios.post("http://192.168.10.131:8080/", {
-                    input: file_data
-                })
-                    .then(response => {
-                            response_tree = response.data.jsonTree;
-                            response_conflicts = response.data.conflictMasterPOJOS;
-                            this.dataObj = response_tree;
-                            this.conflictObj = response_conflicts;
-                            this.conflictCount = response_conflicts.length;
-                        }
-                    )
-
-            },
-            notImpl: function () {
-                alert("Not yet implemented. Will be ready in the next update.")
-            }
-        },
+export default {
+  name: 'App',
+  components: {
+    JsonTree,
+    FileReader,
+  },
+  data() {
+    return {
+      file: "",
+      test: [],
+      dataObj: {
+        "Hello": "On this website you can upload your maven dependency tree to see whether you have conflicts in your builds.",
+      },
+      conflictObj: [],
+      conflictCount: 0,
+      errorMsg: "",
+      dataObjCopy: {},
+      treeview: false
     }
+  },
+  methods: {
+    sendData: function () {
+      let file_data = []
+      let response_tree;
+      let response_conflicts;
+      file_data = this.file.split("\n");
+      for (let i = 0; i < file_data.length; i++) {
+        file_data[i] = file_data[i].replace("\\", "\\\\")
+      }
+      Axios.post("https://immense-springs-38071.herokuapp.com/", {
+        input: file_data
+      })
+          .then(response => {
+                response_tree = response.data.jsonTree;
+                response_conflicts = response.data.conflictPOJOS;
+                this.dataObj = response_tree;
+                this.dataObjCopy = this.dataObj;
+                this.conflictObj = response_conflicts;
+                this.conflictCount = response_conflicts.length;
+              }
+          )
+    },
+    conflictTreeView: function (content) {
+      this.dataObj = content;
+      this.treeview = true;
+    },
+    fullTreeView: function () {
+      this.dataObj = this.dataObjCopy;
+      this.treeview = false;
+    }
+  },
+}
 </script>
 
 <style>
-    #app {
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 
-    textarea {
-        width: 100%;
-        height: 75vh;
-        overflow: auto;
-    }
+textarea {
+  width: 100%;
+  height: 75vh;
+  overflow: auto;
+}
 
-    .json-tree-root {
-        min-width: 0;
-        height: 75vh;
-        overflow: auto;
-    }
+.json-tree-root {
+  min-width: 0;
+  height: 75vh;
+  overflow: auto;
+}
 
-    ul {
-        list-style-type: none;
-    }
-    .bolder {
-        font-weight: bold;
-    }
+ul {
+  list-style-type: none;
+}
+
+.bolder {
+  font-weight: bold;
+}
 
 </style>
