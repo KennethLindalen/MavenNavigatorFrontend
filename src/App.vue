@@ -1,11 +1,10 @@
-<template xmlns:JsonTree="http://www.w3.org/1999/html">
+<template>
   <div class="container-fluid mt-3" id="app" style="padding-left: 5%;padding-right: 5%">
     <div class="jumbotron mt-0">
       <div class="container-fluid">
         <h1 class="display-4">Visualized Maven Conflicts</h1>
         <p class="lead">The simple way to get a good overview of your dependency tree and find version conflicts
           in your maven builds.</p>
-
       </div>
     </div>
     <div class="row">
@@ -134,7 +133,7 @@ export default {
   },
   methods: {
     sendData: function () {
-      let file_data = []
+      let file_data;
       let response_tree;
       let response_conflicts;
       file_data = this.file.split("\n");
