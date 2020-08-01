@@ -31,7 +31,7 @@
               If you find any bugs in the app, please let me know on <a
                   href="https://github.com/KennethLindalen/MvnDepParser">github</a>!</p>
           </div>
-          <div class="input-group mb-2">
+          <div class="input-group mb-3">
             <div class="custom-file rrc">
               <file-reader @load="file = $event"></file-reader>
             </div>
