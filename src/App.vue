@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid mt-3" id="app" style="padding-left: 5%; padding-right: 5%">
-    <div class="jumbotron mt-0 mb-1 rrc">
+    <div class="jumbotron mt-0 mb-1 rrc" style="background-color: #F7F8F9">
       <div class="container-fluid ">
         <h1 class="display-4">Visualized Maven Conflicts</h1>
         <p class="lead">The simple way to get a good overview of your dependency tree and find version conflicts
@@ -9,7 +9,7 @@
     </div>
     <div class="row">
       <div class="col-sm">
-        <div class="alert alert-secondary mb-3 mt-0 rrc" style="text-align: center">
+        <div class="alert alert-secondary mb-3 mt-0 rrc" style="text-align: center; background-color: #F7F8F9">
           <h3>Upload your dependency tree here</h3>
           <hr>
           <div class="m-0">
@@ -97,7 +97,6 @@
     </div>
     <div class="footer pt-5 pb-4" style="text-align: center">
       Developed by Kenneth Lindalen <br>
-      <p>Contact me</p>
       <a href="https://www.linkedin.com/in/kenneth-lindalen-1ba35a187/"><img
           src="./assets/icons/linkedin-brands.svg" alt="" class="social-icons"></a>
       <a href="https://github.com/KennethLindalen"><img src="./assets/icons/github-brands.svg" alt="" class="social-icons"></a>
@@ -168,12 +167,16 @@ export default {
 </script>
 
 <style>
+body{
+  background-color: lightskyblue;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
+  background-color: lightskyblue;
 }
 
 textarea {
@@ -187,6 +190,7 @@ textarea {
   height: 75vh;
   overflow: auto;
   overflow-wrap: normal;
+  margin-top: 0;
 }
 
 ul {
