@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-sm">
         <div class="alert alert-secondary mb-3 mt-0 rrc" style="text-align: center; background-color: #F7F8F9">
-          <h3>Upload your dependency tree here</h3>
+          <h4>Upload your dependency tree here</h4>
           <hr>
           <div class="m-0">
             <p class="m-0">Open up your preferred commandline tool, navigate to your project and type</p>
@@ -189,7 +189,7 @@ textarea {
   min-width: 0;
   height: 75vh;
   overflow: auto;
-  overflow-wrap: normal;
+  overflow-wrap: break-spaces;
   margin-top: 0;
 }
 
