@@ -181,7 +181,6 @@ export default {
 
   .json-tree-value {
     overflow: auto  visible;
-    text-overflow: ellipsis;
     white-space: inherit;
   }
 
