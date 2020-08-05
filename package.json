@@ -16,6 +16,7 @@
     "node-sass": "^4.14.1",
     "sass": "^1.26.9",
     "sass-loader": "^8.0.2",
+    "serve-static": "^1.14.1",
     "sweet-modal-vue": "^2.0.0",
     "vue": "^2.6.11",
     "vue-json-tree": "^0.4.3"
