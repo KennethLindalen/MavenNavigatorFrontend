@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm">
+      <div class="col-sm pr-1 pt-1">
         <div class="alert alert-secondary mb-3 mt-0 rrc"
              style="text-align: center; background-color: #F7F8F9; padding-bottom: 18px">
           <h4>Upload your dependency tree here</h4>
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm">
+      <div class="col-sm pl-1 pt-1">
         <JsonTree class="json-tree-root json-tree-value rrc" :data="dataObj"></JsonTree>
         <button class="btn btn-secondary rrc" style="width: 100%; margin-top: 15px"
                 @click="fullTreeView" v-if="treeview">
