@@ -1,14 +1,14 @@
 <template>
-  <div class="container-fluid mt-3" id="app" style="padding-left: 5%; padding-right: 5%">
+  <div class="container-fluid mt-3 " id="app" style="padding-left: 5%; padding-right: 5%">
     <div class="jumbotron mt-0 mb-1 rrc" style="background-color: #F7F8F9">
-      <div class="container-fluid ">
+      <div class="container-fluid p-5 pl-3">
         <h1 class="display-4">Maven Conflicts - Found the easy way</h1>
         <p class="lead">The simple way to get a good overview of your dependency tree and find version conflicts
           in your maven builds.</p>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm pr-1 pt-1">
+      <div class="col-sm">
         <div class="alert alert-secondary mb-3 mt-0 rrc"
              style="text-align: center; background-color: #F7F8F9; padding-bottom: 18px">
           <h4>Upload your dependency tree here</h4>
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm pl-1 pt-1">
+      <div class="col-sm">
         <JsonTree class="json-tree-root json-tree-value rrc" :data="dataObj"></JsonTree>
         <button class="btn btn-secondary rrc" style="width: 100%; margin-top: 15px"
                 @click="fullTreeView" v-if="treeview">
