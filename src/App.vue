@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-md">
         <div class="alert alert-secondary mb-3 mt-0 rrc"
              style="text-align: center; background-color: #F7F8F9; padding-bottom: 18px">
           <h4>Upload your dependency tree here</h4>
@@ -36,11 +36,11 @@
           </button>
 
 
-          <div class="mt-4 rrc" v-if="conflictCount > 0">
+          <div class="mt-4 rrc"  style="overflow: auto" v-if="conflictCount > 0">
             <hr>
             <h4>Found {{ conflictCount }} confliction set<span v-if="conflictCount > 1">s</span> in your build.</h4>
             <hr>
-            <div class="alert alert-light rrc" v-for="(conflict, firstindex) in conflictObj" :key="firstindex">
+            <div class="alert alert-light rrc " v-for="(conflict, firstindex) in conflictObj" :key="firstindex">
               <div class="" style="color: black">
                 <div class="">
                   <h5>This maven dependency has {{ conflict.conflicts.length }} conflict<span
@@ -52,7 +52,7 @@
                   </div>
                 </div>
                 <div class="grid-container" v-for="(obj, secondindex) in conflict.conflicts" :key="secondindex"
-                     style="margin: 0; overflow-y: auto">
+                     style="margin: 0; overflow: auto">
                   <div class="alert alert-light rrc"
                        style="border: black solid 1px;color: black;">
                     <p class="bolder">Version: <br><span
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm">
+      <div class="col-sm col-md">
         <JsonTree class="json-tree-root json-tree-value rrc" :data="dataObj"></JsonTree>
         <button class="btn btn-secondary rrc" style="width: 100%; margin-top: 15px"
                 @click="fullTreeView" v-if="treeview">
@@ -134,7 +134,7 @@ export default {
       for (let i = 0; i < file_data.length; i++) {
         file_data[i] = file_data[i].replace("\\", "\\\\")
       }
-      Axios.post("https://immense-springs-38071.herokuapp.com/", {
+      Axios.post("https://mvnnavigatorbackend.herokuapp.com/", {
         input: file_data
       })
           .then(response => {
