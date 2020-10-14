@@ -6,5 +6,5 @@ module.exports = {
             .tap(args => {
                 args.compilerOptions.whitespace = 'preserve'
             })
-    }
+    },
 }

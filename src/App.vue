@@ -36,7 +36,7 @@
           </button>
 
 
-          <div class="mt-4 rrc"  style="overflow: auto" v-if="conflictCount > 0">
+          <div class="mt-4 rrc" style="overflow: auto" v-if="conflictCount > 0">
             <hr>
             <h4>Found {{ conflictCount }} confliction set<span v-if="conflictCount > 1">s</span> in your build.</h4>
             <hr>
