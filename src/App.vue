@@ -35,7 +35,11 @@
             conflicts
           </button>
 
-
+          <div class="mt-4 rrc" style="overflow: auto" v-if="conflictCount === 0">
+            <div class="alert alert-light" style="border: black solid 1px;color: black; border-radius: 10px">
+              <h5>Congratulations, we found no conflicts in your build!</h5>
+            </div>
+          </div>
           <div class="mt-4 rrc" style="overflow: auto" v-if="conflictCount > 0">
             <hr>
             <h4>Found {{ conflictCount }} confliction set<span v-if="conflictCount > 1">s</span> in your build.</h4>
@@ -134,6 +138,7 @@ export default {
       for (let i = 0; i < file_data.length; i++) {
         file_data[i] = file_data[i].replace("\\", "\\\\")
       }
+
       Axios.post("https://mvnnavigatorbackend.herokuapp.com/", {
         input: file_data
       })
