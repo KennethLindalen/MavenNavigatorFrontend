@@ -150,9 +150,9 @@ export default {
                 this.dataObjCopy = this.dataObj;
                 this.conflictObj = response_conflicts;
                 this.conflictCount = response_conflicts.length;
+                this.checked = true;
               }
           )
-      this.checked = true;
     },
     conflictTreeView: function (content) {
       this.dataObj = content;
