@@ -35,9 +35,9 @@
             conflicts
           </button>
 
-          <div class="mt-4 rrc" style="overflow: auto" v-if="conflictCount === 0">
+          <div class="mt-4 rrc" style="overflow: auto" v-if="conflictCount === 0 && this.checked !== false">
             <div class="alert alert-light" style="border: black solid 1px;color: black; border-radius: 10px">
-              <h5>Congratulations, we found no conflicts in your build!</h5>
+              <h5>We found no conflicts in your build!</h5>
             </div>
           </div>
           <div class="mt-4 rrc" style="overflow: auto" v-if="conflictCount > 0">
@@ -126,7 +126,8 @@ export default {
       conflictCount: 0,
       errorMsg: "",
       dataObjCopy: {},
-      treeview: false
+      treeview: false,
+      checked: false
     }
   },
   methods: {
@@ -151,6 +152,7 @@ export default {
                 this.conflictCount = response_conflicts.length;
               }
           )
+      this.checked = true;
     },
     conflictTreeView: function (content) {
       this.dataObj = content;
