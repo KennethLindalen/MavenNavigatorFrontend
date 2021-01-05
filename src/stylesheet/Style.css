@@ -58,6 +58,11 @@ ul {
     cursor: pointer;
 }
 
+.ul-bolder {
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
 @media only screen and (max-width: 990px) {
     .infoComp{
         padding-right: 15px !important;

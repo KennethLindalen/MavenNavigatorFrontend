@@ -2,6 +2,7 @@ import FileReader from "@/components/FileReader-Component/FileReader-Component";
 import Axios from "axios";
 import {mapGetters} from "vuex";
 
+
 export default {
     name: "information-component",
     components: {
@@ -13,7 +14,8 @@ export default {
             conflictCount: this.getConflictCount,
             conflictObj: this.getConflictObj,
             checked: this.getChecked,
-            seeConflicts: false
+            seeConflicts: false,
+            seeConflictsLink: "Click here to see your conflicts."
         }
     },
     computed: {
@@ -33,7 +35,7 @@ export default {
         },
         getChecked: function () {
             this.checked = this.getChecked;
-        }
+        },
     },
     methods: {
         sendData: function () {
