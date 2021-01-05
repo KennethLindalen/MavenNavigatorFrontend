@@ -1,0 +1,70 @@
+body {
+    background-color: lightskyblue;
+}
+
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    margin-top: 60px;
+    background-color: lightskyblue;
+}
+
+
+.json-tree-root {
+    min-width: 0;
+    height: 75vh;
+    margin-top: 0;
+}
+
+.json-tree-value {
+    white-space: inherit;
+    text-overflow: initial;
+    overflow: auto visible;
+    padding:0;
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.bolder {
+    font-weight: bold;
+}
+
+.social-icons {
+    width: 20px;
+}
+
+.br-0 {
+    border-radius: 0;
+}
+
+.jumbotron {
+    background-color: #F7F8F9;
+    margin: 0;
+}
+.infoComponent{
+    text-align: center;
+    padding-bottom: 18px;
+    margin-bottom: 5px !important;
+    background-color: #F7F8F9;
+    height: 100%;
+}
+
+.handPointer {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 990px) {
+    .infoComp{
+        padding-right: 15px !important;
+    }
+
+    .jsonComp {
+        padding-left: 15px !important;
+        margin-top: 5px !important;
+    }
+}
