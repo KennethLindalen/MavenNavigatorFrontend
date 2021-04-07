@@ -31,8 +31,7 @@
                 <h4>
                     Found {{ conflictCount }} confliction set<span v-if="conflictCount > 1">s</span>
                     in your build.</h4>
-                <small class="handPointer ul-bolder" @click="seeConflictsBtn" v-if="seeConflicts === false">Click here to see your conflicts</small>
-                <small class="handPointer ul-bolder" @click="seeConflictsBtn" v-if="seeConflicts === true">Click here to hide your conflicts</small>
+                <small class="handPointer" @click="seeConflictsBtn">Click here to see your conflicts</small>
                 <hr>
                 <div v-if="seeConflicts === true">
                 <div class="alert alert-light br-0 " v-for="(conflict, firstindex) in conflictObj" :key="firstindex" >
